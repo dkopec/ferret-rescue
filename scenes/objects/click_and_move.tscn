@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://c3bjx8w7m4tvk"]
+
+[ext_resource type="Script" path="res://scripts/player/click_and_move.gd" id="1_v882k"]
+[ext_resource type="Texture2D" uid="uid://0bs3fp0432m7" path="res://assets/sprites/ferrets/blue_ferret.png" id="2_2khjl"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sb80o"]
+size = Vector2(94, 48)
+
+[node name="ClickAndMove" type="CharacterBody2D"]
+position = Vector2(558, 311)
+motion_mode = 1
+script = ExtResource("1_v882k")
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_2khjl")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1, 11)
+shape = SubResource("RectangleShape2D_sb80o")

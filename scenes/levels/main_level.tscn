@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://qdnr6ab1b042"]
+
+[ext_resource type="PackedScene" uid="uid://c3bjx8w7m4tvk" path="res://scenes/objects/click_and_move.tscn" id="1_5ejxi"]
+[ext_resource type="Texture2D" uid="uid://6w7r2ht3jp5" path="res://assets/images/pxArt.png" id="1_svpj2"]
+[ext_resource type="PackedScene" uid="uid://cmgao2wjceugf" path="res://scenes/objects/ferret_profile.tscn" id="3_63fon"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="PxArt" type="Sprite2D" parent="."]
+position = Vector2(656, 360)
+texture = ExtResource("1_svpj2")
+
+[node name="ClickAndMove" parent="." instance=ExtResource("1_5ejxi")]
+position = Vector2(648, 352)
+
+[node name="Node2D" parent="." instance=ExtResource("3_63fon")]

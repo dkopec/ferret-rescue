@@ -1,0 +1,33 @@
+# Define the directory structure
+$directories = @(
+	"assets\images",
+	"assets\audio",
+	"assets\fonts",
+	"assets\animations",
+	"assets\models",
+	"assets\textures",
+	"assets\tiles",
+	"scripts\player",
+	"scripts\enemies",
+	"scripts\UI",
+	"scripts\managers",
+	"scripts\utils",
+	"scripts\constants",
+	"scenes\levels",
+	"scenes\menus",
+	"scenes\objects",
+	"scenes\prefabs",
+	"addons",
+	"export",
+	"docs",
+	"metadata"
+	# Add more directories if needed
+)
+
+# Create the directories
+foreach ($directory in $directories) {
+	New-Item -ItemType Directory -Path $directory -Force | Out-Null
+}
+
+# Display success message
+Write-Host "Godot project directory structure created successfully!"
