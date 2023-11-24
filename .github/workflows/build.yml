@@ -38,6 +38,7 @@ jobs:
         GODOT_EXPORT_VERSION: "${{ github.ref.id }}"
         GODOT_EXPORT_DIR: "${{ runner.temp }}/godot_build"
       run: |
+        set -e
         mkdir -v -p $GODOT_EXPORT_DIR:
         godot --headless --export-release "Web" "$GODOT_EXPORT_DIR\index.html"
         echo "archive_directory=$GODOT_EXPORT_DIR" >> $GITHUB_OUTPUT
