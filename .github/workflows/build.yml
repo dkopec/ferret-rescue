@@ -31,17 +31,16 @@ jobs:
         mkdir -v -p ~/.local/share/godot/templates
         mv /root/.local/share/godot/templates/${GODOT_VERSION}.stable ~/.local/share/godot/templates/${GODOT_VERSION}.stable
 
-    - name: 🚀 Export Game
+    - name: ⚙ Export Game
       id: export
       shell: pwsh
       env:
         GODOT_EXPORT_VERSION: "${{ github.ref.id }}"
         GODOT_EXPORT_DIR: "${{ runner.temp }}/godot_build"
       run: |
-        mkdir $env:GODOT_EXPORT_DIR
-        ./export_web.ps1
-        ./export_windows.ps1
-        echo "archive_directory=$env:GODOT_EXPORT_DIR" >> $GITHUB_OUTPUT
+        mkdir -v -p $GODOT_EXPORT_DIR:
+        godot --headless --export-release "Web" "$GODOT_EXPORT_DIR\index.html"
+        echo "archive_directory=$GODOT_EXPORT_DIR" >> $GITHUB_OUTPUT
 
       # This release action has worked well for me. However, you can most likely use any release action of your choosing.
       # https://github.com/ncipollo/release-action
@@ -52,3 +51,9 @@ jobs:
         generateReleaseNotes: true
         tag: ${{ github.ref_name }}
         artifacts: ${{ steps.export.outputs.archive_directory }}/*
+
+    - name: Deploy to GitHub Pages 🚀
+      uses: JamesIves/github-pages-deploy-action@releases/v4
+      with:
+        branch: gh-pages # The branch the action should deploy to.
+        folder: build/web # The folder the action should deploy.
