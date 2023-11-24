@@ -4,3 +4,4 @@ $tmp = "$([System.IO.Path]::GetTempPath())godot.zip"
 $dest = "/opt/godot"
 Invoke-WebRequest -Uri $url -OutFile $dest
 Expand-Archive -LiteralPath $tmp -DestinationPath $dest
+chmod +x $dest
