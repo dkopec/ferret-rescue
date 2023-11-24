@@ -33,7 +33,6 @@ jobs:
 
     - name: ⚙ Export Game
       id: export
-      shell: pwsh
       env:
         GODOT_EXPORT_VERSION: "${{ github.ref.id }}"
         GODOT_EXPORT_DIR: "${{ runner.temp }}/godot_build"
