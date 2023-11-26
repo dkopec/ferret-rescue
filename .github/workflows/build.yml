@@ -41,7 +41,8 @@ jobs:
         set -e
         mkdir -v -p $GODOT_EXPORT_DIR
         ls -lsa
-        godot --headless --export-release "Web" "$GODOT_EXPORT_DIR\index.html"
+        godot --headless --export-release "HTML5" "$GODOT_EXPORT_DIR\index.html"
+        zip  "$GODOT_EXPORT_DIR\\ferret_rescure_$GODOT_EXPORT_VERSION.zip" "$GODOT_EXPORT_DIR\*"
         echo "archive_directory=$GODOT_EXPORT_DIR" >> $GITHUB_OUTPUT
 
       # This release action has worked well for me. However, you can most likely use any release action of your choosing.
@@ -52,7 +53,7 @@ jobs:
         token: ${{ secrets.GITHUB_TOKEN }}
         generateReleaseNotes: true
         tag: ${{ github.ref_name }}
-        artifacts: ${{ steps.export.outputs.archive_directory }}/*
+        artifacts: ${{ steps.export.outputs.archive_directory }}/*.zip
 
     - name: Deploy to GitHub Pages 🚀
       uses: JamesIves/github-pages-deploy-action@releases/v4
