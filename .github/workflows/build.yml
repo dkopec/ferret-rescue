@@ -1,0 +1,61 @@
+name: Build Godot Project
+
+# Whenever a tag push matching pattern "v*" then run the job
+on:
+  push:
+    # tags:
+    #   - "v*"
+
+env:
+  GODOT_VERSION: 4.1.3
+
+jobs:
+  # job id, can be anything
+  export_game:
+    # Always use ubuntu-latest for this action
+    runs-on: ubuntu-latest
+    # Add permission for release creation. Can be made narrower according to your needs
+    permissions: write-all
+    container:
+      image: barichello/godot-ci:4.1.3
+    # Job name, can be anything
+    name: Export Game
+    steps:
+      # Always include the checkout step so that
+      # your project is available for Godot to export
+    - name: checkout
+      uses: actions/checkout@v3.3.0
+
+    - name: 🤖 Setup Godot
+      run: |
+        mkdir -v -p ~/.local/share/godot/export_templates
+        mv /root/.local/share/godot/templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
+        ls ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
+
+    - name: ⚙ Export Game
+      id: export
+      env:
+        GODOT_EXPORT_VERSION: "${{ github.ref.id }}"
+        GODOT_EXPORT_DIR: "build/web"
+      run: |
+        set -e
+        mkdir -v -p $GODOT_EXPORT_DIR
+        ls -lsa
+        godot --headless --export-release "Web" "$GODOT_EXPORT_DIR\index.html"
+        echo "archive_directory=$GODOT_EXPORT_DIR" >> $GITHUB_OUTPUT
+
+      # This release action has worked well for me. However, you can most likely use any release action of your choosing.
+      # https://github.com/ncipollo/release-action
+    - name: 🏁 Create Release
+      uses: ncipollo/release-action@v1.12.0
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        generateReleaseNotes: true
+        tag: ${{ github.ref_name }}
+        artifacts: ${{ steps.export.outputs.archive_directory }}/*
+
+    - name: Deploy to GitHub Pages 🚀
+      uses: JamesIves/github-pages-deploy-action@releases/v4
+      with:
+        branch: gh-pages # The branch the action should deploy to.
+        folder: build/web # The folder the action should deploy.
