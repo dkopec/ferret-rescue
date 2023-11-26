@@ -9,7 +9,7 @@ on:
 env:
   GODOT_VERSION: "3.5.3"
   RELEASE_NAME: "stable"
-  GODOT_PLATFORM: "linux.x86_64"
+  GODOT_PLATFORM: "linux_headless.64"
 
 jobs:
   # job id, can be anything
@@ -28,6 +28,8 @@ jobs:
 
     - name: 🤖 Setup Godot
       run: |
+        #https://github.com/godotengine/godot-builds/releases/download/3.5.3-stable/Godot_v3.5.3-stable_x11.64.zip
+        #https://github.com/godotengine/godot-builds/releases/download/3.5.3-stable/Godot_v3.5.3-stable_linux_headless.64.zip
         wget https://github.com/godotengine/godot-builds/releases/download/${GODOT_VERSION}-${RELEASE_NAME}/Godot_v${GODOT_VERSION}-${RELEASE_NAME}_${GODOT_PLATFORM}.zip
         wget https://github.com/godotengine/godot-builds/releases/download/${GODOT_VERSION}-${RELEASE_NAME}/Godot_v${GODOT_VERSION}-${RELEASE_NAME}_export_templates.tpz
         mkdir ~/.cache
