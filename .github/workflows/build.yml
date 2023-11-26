@@ -39,7 +39,8 @@ jobs:
         GODOT_EXPORT_DIR: "build/web"
       run: |
         set -e
-        mkdir -v -p $GODOT_EXPORT_DIR:
+        mkdir -v -p $GODOT_EXPORT_DIR
+        ls -lsa
         godot --headless --export-release "Web" "$GODOT_EXPORT_DIR\index.html"
         echo "archive_directory=$GODOT_EXPORT_DIR" >> $GITHUB_OUTPUT
 
