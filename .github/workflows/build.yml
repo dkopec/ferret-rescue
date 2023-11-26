@@ -30,19 +30,25 @@ jobs:
       run: |
         #https://github.com/godotengine/godot-builds/releases/download/3.5.3-stable/Godot_v3.5.3-stable_x11.64.zip
         #https://github.com/godotengine/godot-builds/releases/download/3.5.3-stable/Godot_v3.5.3-stable_linux_headless.64.zip
-        wget https://github.com/godotengine/godot-builds/releases/download/${GODOT_VERSION}-${RELEASE_NAME}/Godot_v${GODOT_VERSION}-${RELEASE_NAME}_${GODOT_PLATFORM}.zip
-        wget https://github.com/godotengine/godot-builds/releases/download/${GODOT_VERSION}-${RELEASE_NAME}/Godot_v${GODOT_VERSION}-${RELEASE_NAME}_export_templates.tpz
-        mkdir ~/.cache
-        mkdir -p ~/.config/godot
-        mkdir -p ~/.local/share/godot/templates/${GODOT_VERSION}.${RELEASE_NAME}
-        ln -s ~/.local/share/godot/templates ~/.local/share/godot/export_templates
-        unzip Godot_v${GODOT_VERSION}-${RELEASE_NAME}_${GODOT_PLATFORM}.zip
-        mv Godot_v${GODOT_VERSION}-${RELEASE_NAME}_${GODOT_PLATFORM} /usr/local/bin/godot
-        unzip Godot_v${GODOT_VERSION}-${RELEASE_NAME}_export_templates.tpz
-        mv templates/* ~/.local/share/godot/templates/${GODOT_VERSION}.${RELEASE_NAME}
-        rm -f Godot_v${GODOT_VERSION}-${RELEASE_NAME}_export_templates.tpz Godot_v${GODOT_VERSION}-${RELEASE_NAME}_${GODOT_PLATFORM}.zip
+        echo "Download Bineries and Templates"
+        wget -nv https://github.com/godotengine/godot-builds/releases/download/${GODOT_VERSION}-${RELEASE_NAME}/Godot_v${GODOT_VERSION}-${RELEASE_NAME}_${GODOT_PLATFORM}.zip
+        wget -nv https://github.com/godotengine/godot-builds/releases/download/${GODOT_VERSION}-${RELEASE_NAME}/Godot_v${GODOT_VERSION}-${RELEASE_NAME}_export_templates.tpz
+        echo "Done"
+        echo "Make and link Directories"
+        mkdir -v ~/.cache
+        mkdir -v -p ~/.config/godot
+        mkdir -v -p ~/.local/share/godot/templates/${GODOT_VERSION}.${RELEASE_NAME}
         mkdir -v -p ~/.local/share/godot/export_templates
-        ls ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
+        ln -s ~/.local/share/godot/templates ~/.local/share/godot/export_templates
+        echo "Done"
+        echo "Extract and install Binaries and Templates"
+        unzip Godot_v${GODOT_VERSION}-${RELEASE_NAME}_${GODOT_PLATFORM}.zip
+        mv -v Godot_v${GODOT_VERSION}-${RELEASE_NAME}_${GODOT_PLATFORM} /usr/local/bin/godot
+        unzip Godot_v${GODOT_VERSION}-${RELEASE_NAME}_export_templates.tpz
+        mv -v templates/* ~/.local/share/godot/templates/${GODOT_VERSION}.${RELEASE_NAME}
+        echo "Cleanup"
+        rm -f Godot_v${GODOT_VERSION}-${RELEASE_NAME}_export_templates.tpz Godot_v${GODOT_VERSION}-${RELEASE_NAME}_${GODOT_PLATFORM}.zip
+        echo "Done"
 
     - name: ⚙ Export Game
       id: export
@@ -50,7 +56,6 @@ jobs:
         GODOT_EXPORT_VERSION: "${{ github.ref.id }}"
         GODOT_EXPORT_DIR: "build/web"
       run: |
-        set -e
         mkdir -v -p $GODOT_EXPORT_DIR
         ls -lsa
         godot --headless --export-release "HTML5" "$GODOT_EXPORT_DIR\index.html"
