@@ -36,7 +36,7 @@ jobs:
       id: export
       env:
         GODOT_EXPORT_VERSION: "${{ github.ref.id }}"
-        GODOT_EXPORT_DIR: "./build/web"
+        GODOT_EXPORT_DIR: "build/web"
       run: |
         set -e
         mkdir -v -p $GODOT_EXPORT_DIR:
