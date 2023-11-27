@@ -1,13 +1,15 @@
-[gd_scene load_steps=3 format=3 uid="uid://qdnr6ab1b042"]
+[gd_scene load_steps=3 format=2]
 
-[ext_resource type="PackedScene" uid="uid://c3bjx8w7m4tvk" path="res://scenes/objects/click_and_move.tscn" id="1_5ejxi"]
-[ext_resource type="Texture2D" uid="uid://6w7r2ht3jp5" path="res://assets/images/pxArt.png" id="1_svpj2"]
+[ext_resource path="res://assets/images/2023-11-16 18_13_03-FerretSoftware - Twitch and 16 more pages - Personal - Microsoft​ Edge.png" type="Texture" id=1]
+[ext_resource path="res://scenes/objects/ferret.tscn" type="PackedScene" id=2]
 
 [node name="Node2D" type="Node2D"]
 
-[node name="PxArt" type="Sprite2D" parent="."]
-position = Vector2(656, 360)
-texture = ExtResource("1_svpj2")
+[node name="TextureRect" type="TextureRect" parent="."]
+margin_right = 1024.0
+margin_bottom = 600.0
+texture = ExtResource( 1 )
+expand = true
+stretch_mode = 1
 
-[node name="ClickAndMove" parent="." instance=ExtResource("1_5ejxi")]
-position = Vector2(648, 352)
+[node name="RotateAndMove" parent="." instance=ExtResource( 2 )]
