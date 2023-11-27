@@ -26,6 +26,12 @@ jobs:
     - name: checkout
       uses: actions/checkout@v3.3.0
 
+    - name: Tag commit
+      uses: tvdias/github-tagger@v0.0.1
+      with:
+        repo-token: "${{ secrets.GITHUB_TOKEN }}"
+        tag: "${{ github.ref.id }}"
+
     - name: 🤖 Setup Godot
       run: |
         #https://github.com/godotengine/godot-builds/releases/download/3.5.3-stable/Godot_v3.5.3-stable_x11.64.zip
