@@ -70,7 +70,7 @@ jobs:
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         generateReleaseNotes: true
-        tag: ${{ github.ref_name }}
+        tag: ${{ github.ref.id }}
         artifacts: ${{ steps.export.outputs.archive_directory }}/*.zip
 
     - name: Deploy to GitHub Pages 🚀
