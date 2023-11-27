@@ -54,13 +54,15 @@ jobs:
       id: export
       env:
         GODOT_EXPORT_VERSION: "${{ github.ref.id }}"
-        GODOT_EXPORT_DIR: "build/web"
+        GODOT_EXPORT_DIR: "build"
       run: |
-        mkdir -v -p $GODOT_EXPORT_DIR
+        mkdir -v -p $GODOT_EXPORT_DIR/web $GODOT_EXPORT_DIR/windows
         ls -lsa
-        godot --export "HTML5" "$GODOT_EXPORT_DIR/index.html"
-        ls -lsa $GODOT_EXPORT_DIR
-        zip  -rj "$GODOT_EXPORT_DIR/ferret_rescure_$GODOT_EXPORT_VERSION.zip" "$GODOT_EXPORT_DIR"
+        godot --export "HTML5" "$GODOT_EXPORT_DIR/web/index.html"
+        ls -lsa $GODOT_EXPORT_DIR/web
+        zip  -rj "$GODOT_EXPORT_DIR/ferret_rescure_$GODOT_EXPORT_VERSION_web.zip" "$GODOT_EXPORT_DIR/web"
+        godot --export "Windows Desktop" "$GODOT_EXPORT_DIR/windows/ferret_rescue.exe"
+        zip  -rj "$GODOT_EXPORT_DIR/ferret_rescure_$GODOT_EXPORT_VERSION_windows.zip" "$GODOT_EXPORT_DIR/windows"
         echo "archive_directory=$GODOT_EXPORT_DIR" >> $GITHUB_OUTPUT
 
       # This release action has worked well for me. However, you can most likely use any release action of your choosing.
