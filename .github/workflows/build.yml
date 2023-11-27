@@ -26,11 +26,11 @@ jobs:
     - name: checkout
       uses: actions/checkout@v3.3.0
 
-    - name: Tag commit
-      uses: tvdias/github-tagger@v0.0.1
+    - name: Bump version and push tag
+      id: tag_version
+      uses: mathieudutour/github-tag-action@v6.1
       with:
-        repo-token: "${{ secrets.GITHUB_TOKEN }}"
-        tag: "${{ github.ref.id }}"
+        github_token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: 🤖 Setup Godot
       run: |
@@ -77,8 +77,10 @@ jobs:
       uses: ncipollo/release-action@v1.12.0
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
+        name: Release ${{ steps.tag_version.outputs.new_tag }}
+        body: ${{ steps.tag_version.outputs.changelog }}
         generateReleaseNotes: true
-        tag: ${{ github.ref.id }}
+        tag: ${{ steps.tag_version.outputs.new_tag }}
         artifacts: ${{ steps.export.outputs.archive_directory }}/*.zip
 
     - name: Deploy to GitHub Pages 🚀
