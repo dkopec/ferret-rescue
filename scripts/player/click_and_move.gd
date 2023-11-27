@@ -7,8 +7,6 @@ var target = position
 func _input(event):
 	if event.is_action_pressed("click"):
 		target = get_global_mouse_position()
-		if target == position:
-			
 		
 func _physics_process(delta):
 	velocity = position.direction_to(target) * speed
