@@ -59,7 +59,8 @@ jobs:
         mkdir -v -p $GODOT_EXPORT_DIR
         ls -lsa
         godot --export "HTML5" "$GODOT_EXPORT_DIR/index.html"
-        zip  -j "$GODOT_EXPORT_DIR/ferret_rescure_$GODOT_EXPORT_VERSION.zip" "$GODOT_EXPORT_DIR"
+        ls -lsa $GODOT_EXPORT_DIR
+        zip  -rj "$GODOT_EXPORT_DIR/ferret_rescure_$GODOT_EXPORT_VERSION.zip" "$GODOT_EXPORT_DIR"
         echo "archive_directory=$GODOT_EXPORT_DIR" >> $GITHUB_OUTPUT
 
       # This release action has worked well for me. However, you can most likely use any release action of your choosing.
