@@ -64,11 +64,17 @@ jobs:
       run: |
         mkdir -v -p $GODOT_EXPORT_DIR/web $GODOT_EXPORT_DIR/windows
         ls -lsa
+
         godot --export "HTML5" "$GODOT_EXPORT_DIR/web/index.html"
         ls -lsa $GODOT_EXPORT_DIR/web
         zip  -rj "$GODOT_EXPORT_DIR/ferret_rescure_${GODOT_EXPORT_VERSION}_web.zip" "$GODOT_EXPORT_DIR/web"
+        echo "zip_web=${GODOT_EXPORT_DIR}/ferret_rescure_${GODOT_EXPORT_VERSION}_web.zip" >> $GITHUB_OUTPUT
+
         godot --export "Windows Desktop" "$GODOT_EXPORT_DIR/windows/ferret_rescue.exe"
+        ls -lsa $GODOT_EXPORT_DIR/windows
         zip  -rj "$GODOT_EXPORT_DIR/ferret_rescure_${GODOT_EXPORT_VERSION}_windows.zip" "$GODOT_EXPORT_DIR/windows"
+        echo "zip_windows=${GODOT_EXPORT_DIR}/ferret_rescure_${GODOT_EXPORT_VERSION}_windows.zip" >> $GITHUB_OUTPUT
+
         echo "archive_directory=$GODOT_EXPORT_DIR" >> $GITHUB_OUTPUT
 
       # This release action has worked well for me. However, you can most likely use any release action of your choosing.
@@ -88,3 +94,29 @@ jobs:
       with:
         branch: gh-pages # The branch the action should deploy to.
         folder: build/web # The folder the action should deploy.
+
+    - name: 🤖 Setup Itch.io Butler
+      run: |
+        echo "Download Binerie"
+        wget -O butler.zip https://broth.itch.ovh/butler/linux-amd64/LATEST/archive/default
+        echo "Done"
+        echo "Extract and install Binaries and Templates"
+        unzip butler.zip -d /usr/local/bin/
+        echo "Cleanup"
+        rm -f butler.zip
+        echo "Done"
+
+    - name: ⬆ Release to Itcho.io
+      id: release_to_itch
+      env:
+        GAME_VERSION: "${{ steps.tag_version.outputs.new_tag }}"
+        GAME_EXPORT_DIR: ${{ steps.export.outputs.archive_directory }}
+        GAME_WEB: ${{ steps.export.outputs.zip_web }}
+        GAME_WINDOWS: ${{ steps.export.outputs.zip_windows }}
+        BUTLER_API_KEY: ${{ secrets.ITCHIO_BUTLER_API }}
+        BUTLER_USER: ${{ vars.ITCHIO_BUTLER_USER }}
+        BUTLER_GAME: ${{ vars.ITCHIO_BUTLER_GAME }}
+      run: |
+        butler push $GAME_WEB "${BUTLER_USER}/${BUTLER_GAME}:html5" --userversion "$GAME_VERSION"
+        butler push $GAME_WINDOWS "${BUTLER_USER}/${BUTLER_GAME}:windows" --userversion "$GAME_VERSION"
+
