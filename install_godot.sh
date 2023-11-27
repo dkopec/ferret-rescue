@@ -25,7 +25,7 @@ rm -f Godot_v${GODOT_VERSION}-${RELEASE_NAME}_export_templates.tpz Godot_v${GODO
 echo "Done"
 
 export GODOT_EXPORT_VERSION="0.0.1"
-export GODOT_EXPORT_DIR="build/web"
+export GODOT_EXPORT_DIR="build"
 
 mkdir -v -p $GODOT_EXPORT_DIR
 ls -lsa
