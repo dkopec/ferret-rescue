@@ -16,4 +16,4 @@ func _physics_process(_delta):
 	velocity = (target - position).normalized() * speed
 	# rotation = velocity.angle()
 	if (target - position).length() > 5:
-		var ms = move_and_slide(velocity)
+		var _ms = move_and_slide(velocity)
