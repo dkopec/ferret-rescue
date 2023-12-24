@@ -3,7 +3,7 @@ extends Area2D
 signal item_collected(value)
 var item_value = 1
 
-func _on_Item_body_entered(body):
+func _on_Item_body_entered(_body):
 	print("Item Collected")
 	emit_signal("item_collected", item_value)
 	queue_free()
