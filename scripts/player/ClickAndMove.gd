@@ -9,7 +9,7 @@ func _ready():
 	target = self.position
 
 func _input(event):
-	if event.is_action('click'):
+	if event.is_action('click') or event is InputEventScreenTouch:
 		target = event.position
 
 func _physics_process(_delta):
