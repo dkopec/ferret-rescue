@@ -33,4 +33,27 @@ rect_scale = Vector2( 2, 2 )
 size_flags_vertical = 0
 text = "0"
 
+[node name="PlayerSpeed_Button" type="Button" parent="."]
+margin_left = 933.0
+margin_top = 80.0
+margin_right = 1012.0
+margin_bottom = 100.0
+text = "Buy Speed"
+
+[node name="SpawnSpeed_Button" type="Button" parent="."]
+margin_left = 933.0
+margin_top = 102.0
+margin_right = 1012.0
+margin_bottom = 122.0
+text = "Buy Spawn"
+
+[node name="Upgrade_GridContainer" type="GridContainer" parent="."]
+margin_left = 944.0
+margin_top = 151.0
+margin_right = 996.0
+margin_bottom = 408.0
+columns = 2
+
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
+[connection signal="pressed" from="PlayerSpeed_Button" to="." method="_on_PlayerSpeed_Button_pressed"]
+[connection signal="pressed" from="SpawnSpeed_Button" to="." method="_on_SpawnSpeed_Button_pressed"]

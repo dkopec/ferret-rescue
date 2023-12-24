@@ -4,7 +4,7 @@
 [ext_resource path="res://assets/sprites/ferrets/blue_ferret.png" type="Texture" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 30.2192, 30.771 )
+extents = Vector2( 45, 21.5 )
 
 [node name="Character" type="KinematicBody2D"]
 script = ExtResource( 1 )
@@ -13,4 +13,5 @@ script = ExtResource( 1 )
 texture = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( -1, 10.5 )
 shape = SubResource( 1 )
