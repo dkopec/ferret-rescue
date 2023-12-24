@@ -9,8 +9,8 @@ func _ready():
 	target = self.position
 
 func _input(event):
-	if event.is_action_pressed('click'):
-		target = get_global_mouse_position()
+	if event.is_action('click'):
+		target = event.position
 
 func _physics_process(_delta):
 	velocity = (target - position).normalized() * speed
