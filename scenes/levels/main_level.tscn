@@ -16,7 +16,7 @@ expand = true
 stretch_mode = 1
 
 [node name="player" parent="." instance=ExtResource( 2 )]
-position = Vector2( 500, 329 )
+position = Vector2( 512, 300 )
 collision_layer = 2
 
 [node name="Timer" type="Timer" parent="."]
