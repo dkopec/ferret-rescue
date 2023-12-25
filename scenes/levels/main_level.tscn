@@ -20,7 +20,7 @@ position = Vector2( 512, 300 )
 collision_layer = 2
 
 [node name="Timer" type="Timer" parent="."]
-wait_time = 5.0
+wait_time = 10.0
 autostart = true
 script = ExtResource( 4 )
 
@@ -47,12 +47,11 @@ margin_right = 1012.0
 margin_bottom = 122.0
 text = "Buy Spawn"
 
-[node name="Upgrade_GridContainer" type="GridContainer" parent="."]
-margin_left = 944.0
+[node name="Upgrade_VFlowContainer" type="VFlowContainer" parent="."]
+margin_left = 955.0
 margin_top = 151.0
-margin_right = 996.0
+margin_right = 981.0
 margin_bottom = 408.0
-columns = 2
 
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
 [connection signal="pressed" from="PlayerSpeed_Button" to="." method="_on_PlayerSpeed_Button_pressed"]
